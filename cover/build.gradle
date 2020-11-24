@@ -1,7 +1,76 @@
 plugins {
-    id 'java-gradle-plugin'
-    id 'maven'
-    id 'maven-publish'
+    id "java-gradle-plugin"
+    id "maven"
+    id "maven-publish"
+    id "com.jfrog.bintray" version "1.8.5"
+}
+
+java {
+    withJavadocJar()
+    withSourcesJar()
+}
+
+def versionName = "1.0.0-alpha01"
+def artifactName = project.name
+
+publishing {
+    publications {
+        bintrayPublication(MavenPublication)  {
+            from components.java
+
+            // these are not necessary since withJavadocJar and withSourcesJar
+            // bundle artifacts with components.java
+            //artifact sourcesJar
+            //artifact javadocJar
+
+            groupId = "com.skoumal.grimoire"
+            artifactId = artifactName
+            version = versionName
+
+            pom {
+                name = "Grimoire Cover"
+                description = "The Grimoire Book Cover for your project"
+                url = "https://github.com/skoumalcz/grimoire-cover"
+                licenses {
+                    license {
+                        name = "GNU General Public License v3"
+                        url = "https://www.gnu.org/licenses/gpl-3.0.en.html"
+                    }
+                }
+                developers {
+                    developer {
+                        id = "diareuse"
+                        name = "Viktor De Pasquale"
+                        email = "viktor.depasquale@skoumal.net"
+                    }
+                }
+                scm {
+                    connection = "scm:git://github.com/skoumalcz/grimoire-cover.git"
+                    developerConnection = "scm:git://github.com/skoumalcz/grimoire-cover.git"
+                    url = "https://github.com/skoumalcz/grimoire-cover"
+                }
+            }
+        }
+    }
+}
+
+bintray {
+    user = project.hasProperty("bintrayUser") ? project.property("bintrayUser") : System.getenv("BINTRAY_USER")
+    key = project.hasProperty("bintrayApiKey") ? project.property("bintrayApiKey") : System.getenv("BINTRAY_API_KEY")
+    publications = ["bintrayPublication"]
+    pkg {
+        repo = "grimoire"
+        name = artifactName
+        userOrg = user
+        licenses = ["GPL-3.0"]
+        vcsUrl = "https://github.com/skoumalcz/grimoire-cover"
+        publicDownloadNumbers = true
+        version {
+            name = versionName
+            desc = "The Grimoire Book Cover for your project"
+            vcsTag = versionName
+        }
+    }
 }
 
 dependencies {

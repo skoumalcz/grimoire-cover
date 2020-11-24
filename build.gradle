@@ -17,6 +17,17 @@ allprojects {
     }
 }
 
+subprojects {
+    /*task sourcesJar(type: Jar, dependsOn: classes) {
+        from sourceSets.main.allSource
+    }
+
+    task javadocJar(type: Jar, dependsOn: javadoc) {
+        getArchiveClassifier().set("javadoc")
+        from javadoc.destinationDir
+    }*/
+}
+
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
