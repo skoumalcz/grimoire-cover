@@ -1,6 +1,6 @@
 plugins {
     `java-gradle-plugin`
-    `kotlin-dsl` version "1.4.4"
+    `kotlin-dsl`
     `maven-publish`
     id("com.jfrog.bintray")
 }
