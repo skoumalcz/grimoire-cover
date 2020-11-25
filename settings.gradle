@@ -1,2 +1,1 @@
 include ':cover'
-rootProject.name = "grimoire-cover"

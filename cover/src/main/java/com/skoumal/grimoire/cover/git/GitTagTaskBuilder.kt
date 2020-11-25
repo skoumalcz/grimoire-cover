@@ -111,13 +111,13 @@ class GitTagTaskBuilder(
         val mainOutput = variant.outputs.single { it.outputType == OutputType.SINGLE }
         val options = options ?: project.extensions.getByType(VersionOptions::class.java)
         val task = project.tasks.register(taskName, GitTagTask::class.java) {
-            it.outputFile.set(buildFile)
-            it.versionOptions.set(options)
-            it.identity.set(identity)
+            outputFile.set(buildFile)
+            versionOptions.set(options)
+            identity.set(this@GitTagTaskBuilder.identity)
         }
 
-        val defaultName = mainOutput.versionName.getOrElse("1.0.0") ?: "1.0.0"
-        val defaultCode = mainOutput.versionCode.getOrElse(0) ?: 0
+        val defaultName = mainOutput.versionName.getOrElse("1.0.0")
+        val defaultCode = mainOutput.versionCode.getOrElse(0)
 
         val taskOutput = task.map { it.outputFile.runCatching { get().asFile.readLines() } }
 

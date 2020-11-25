@@ -6,6 +6,7 @@ import com.skoumal.grimoire.cover.git.model.VersionType
 import org.gradle.api.DefaultTask
 import org.gradle.api.file.RegularFileProperty
 import org.gradle.api.provider.Property
+import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.OutputFile
 import org.gradle.api.tasks.TaskAction
 
@@ -14,7 +15,10 @@ abstract class GitTagTask : DefaultTask() {
     @get:OutputFile
     abstract val outputFile: RegularFileProperty
 
+    @get:Input
     abstract val versionOptions: Property<VersionOptions>
+
+    @get:Input
     abstract val identity: Property<ComponentIdentity>
 
     private val _versionOptions inline get() = versionOptions.get()

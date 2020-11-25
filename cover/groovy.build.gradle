@@ -1,21 +1,14 @@
-plugins {
-    id "java-gradle-plugin"
-    id "maven"
-    id "maven-publish"
-    id "com.jfrog.bintray" version "1.8.5"
-}
-
 java {
     withJavadocJar()
     withSourcesJar()
 }
 
-def versionName = "1.0.0-alpha01"
+def versionName = publicationVersionName
 def artifactName = project.name
 
 publishing {
     publications {
-        bintrayPublication(MavenPublication)  {
+        bintrayPublication(MavenPublication) {
             from components.java
 
             // these are not necessary since withJavadocJar and withSourcesJar
@@ -23,31 +16,31 @@ publishing {
             //artifact sourcesJar
             //artifact javadocJar
 
-            groupId = "com.skoumal.grimoire"
+            groupId = projectGroupId
             artifactId = artifactName
             version = versionName
 
             pom {
-                name = "Grimoire Cover"
-                description = "The Grimoire Book Cover for your project"
-                url = "https://github.com/skoumalcz/grimoire-cover"
+                name = pomName
+                description = pomDescription
+                url = pomUrl
                 licenses {
                     license {
-                        name = "GNU General Public License v3"
-                        url = "https://www.gnu.org/licenses/gpl-3.0.en.html"
+                        name = pomLicence
+                        url = pomLicenceUrl
                     }
                 }
                 developers {
                     developer {
-                        id = "diareuse"
-                        name = "Viktor De Pasquale"
-                        email = "viktor.depasquale@skoumal.net"
+                        id = pomDeveloperId
+                        name = pomDeveloperName
+                        email = pomDeveloperEmail
                     }
                 }
                 scm {
-                    connection = "scm:git://github.com/skoumalcz/grimoire-cover.git"
-                    developerConnection = "scm:git://github.com/skoumalcz/grimoire-cover.git"
-                    url = "https://github.com/skoumalcz/grimoire-cover"
+                    connection = pomScmConnection
+                    developerConnection = pomScmConnection
+                    url = pomScmUrl
                 }
             }
         }
@@ -77,6 +70,5 @@ dependencies {
 
     compileOnly(gradleApi())
     compileOnly("com.android.tools.build:gradle:${android_version}")
-    compileOnly("org.jetbrains.kotlin:kotlin-gradle-plugin:${kotlin_version}")
 
 }
