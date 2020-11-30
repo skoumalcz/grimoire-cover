@@ -70,5 +70,6 @@ dependencies {
 
     compileOnly(gradleApi())
     compileOnly("com.android.tools.build:gradle:${android_version}")
+    compileOnly("org.jetbrains.kotlin:kotlin-gradle-plugin:${kotlin_version}")
 
 }
