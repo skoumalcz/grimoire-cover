@@ -16,8 +16,13 @@ abstract class AndroidFactory {
         applyPluginSafely(PLUGIN_KOTLIN_KAPT)
     }
 
+    @Deprecated("Use applyParcelize on projects with kotlin >= 1.4.20")
     fun applyAndroidExtension() = apply {
         applyPluginSafely(PLUGIN_KOTLIN_EXT)
+    }
+
+    fun applyParcelize() = apply {
+        applyPluginSafely(PLUGIN_KOTLIN_PARCELIZE)
     }
 
     fun applyPublishing() = apply {
@@ -95,11 +100,12 @@ abstract class AndroidFactory {
 
     companion object {
 
-        const val PLUGIN_APP = "com.android.library"
+        const val PLUGIN_APP = "com.android.application"
         const val PLUGIN_LIBRARY = "com.android.library"
         private const val PLUGIN_KOTLIN = "kotlin-android"
         private const val PLUGIN_KOTLIN_KAPT = "kotlin-kapt"
         private const val PLUGIN_KOTLIN_EXT = "kotlin-android-extensions"
+        private const val PLUGIN_KOTLIN_PARCELIZE = "kotlin-parcelize"
         private const val PLUGIN_MAVEN = "maven-publish"
         private const val PLUGIN_BINTRAY = "com.jfrog.bintray"
 
