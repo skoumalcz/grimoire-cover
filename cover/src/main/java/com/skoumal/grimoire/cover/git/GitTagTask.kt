@@ -46,8 +46,10 @@ abstract class GitTagTask : DefaultTask() {
             startIndex = prefixIndex,
             endIndex = postfixIndex
         )
-        val versionCode = _versionOptions.versionCodeOverride
-            .invoke(identity.get(), config.transformVersionCode(versionName))
+        val versionCode = _versionOptions.versionCodeOverride.onVersionCode(
+            identity = identity.get(),
+            code = config.transformVersionCode(versionName)
+        )
 
         @Suppress("DEPRECATION")
         return writeResult(
