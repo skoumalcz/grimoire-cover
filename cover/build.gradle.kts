@@ -11,4 +11,4 @@ repositories {
     jcenter()
 }
 
-apply(from = "groovy.build.gradle")
+apply(from = project.rootDir.absolutePath + File.separator + "groovy.build.gradle")
