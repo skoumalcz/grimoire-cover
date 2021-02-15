@@ -25,7 +25,7 @@ publishing {
         }
     }
     publications {
-        mavenPublication(MavenPublication) {
+        ossrh(MavenPublication) {
             from components.java
 
             // these are not necessary since withJavadocJar and withSourcesJar
@@ -65,7 +65,7 @@ publishing {
 }
 
 signing {
-    sign publishing.publications.mavenPublication
+    sign publishing.publications.ossrh
 }
 
 dependencies {
