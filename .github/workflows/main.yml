@@ -50,8 +50,8 @@ jobs:
         env:
           SIGNING_SECRET_RING: ${{ secrets.SIGNING_SECRET_RING }}
           SIGNING_SECRET_RING_FILE: ${{ secrets.SIGNING_SECRET_RING_FILE }}
-      - name: Build
+      - name: Setup Java
         uses: actions/setup-java@v1.4.3
         with:
           java-version: 11
-        run: ./gradlew assembleRelease publish
+      - run: ./gradlew assembleRelease publish
