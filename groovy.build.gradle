@@ -5,6 +5,8 @@ java {
 
 def versionName = publicationVersionName
 def artifactName = project.name
+project.group = projectGroupId
+project.version = versionName
 
 publishing {
     repositories {
@@ -17,7 +19,7 @@ publishing {
                         ? project.property("ossrh.username")
                         : System.getenv("OOSRH_USERNAME")
                 password = project.hasProperty('ossrh.password')
-                        ? project.property("ossrh.username")
+                        ? project.property("ossrh.password")
                         : System.getenv("OOSRH_PASSWORD")
             }
         }
