@@ -7,8 +7,23 @@ def versionName = publicationVersionName
 def artifactName = project.name
 
 publishing {
+    repositories {
+        maven {
+            def releaseRepo = "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
+            def snapshotRepo = "https://oss.sonatype.org/content/repositories/snapshots/"
+            url = versionName.contains("-") ? snapshotRepo : releaseRepo
+            credentials {
+                username = project.hasProperty('ossrh.username')
+                        ? project.property("ossrh.username")
+                        : System.getenv("OOSRH_USERNAME")
+                password = project.hasProperty('ossrh.password')
+                        ? project.property("ossrh.username")
+                        : System.getenv("OOSRH_PASSWORD")
+            }
+        }
+    }
     publications {
-        bintrayPublication(MavenPublication) {
+        mavenPublication(MavenPublication) {
             from components.java
 
             // these are not necessary since withJavadocJar and withSourcesJar
@@ -47,23 +62,18 @@ publishing {
     }
 }
 
-bintray {
-    user = project.hasProperty("bintrayUser") ? project.property("bintrayUser") : System.getenv("BINTRAY_USER")
-    key = project.hasProperty("bintrayKey") ? project.property("bintrayKey") : System.getenv("BINTRAY_KEY")
-    publications = ["bintrayPublication"]
-    pkg {
-        repo = "grimoire"
-        name = artifactName
-        userOrg = user
-        licenses = ["GPL-3.0"]
-        vcsUrl = "https://github.com/skoumalcz/grimoire-cover"
-        publicDownloadNumbers = true
-        version {
-            name = versionName
-            desc = "The Grimoire Book Cover for your project"
-            vcsTag = versionName
-        }
-    }
+if (!project.hasProperty("signing.keyId")) {
+    project.setProperty("signing.keyId", System.getenv("SIGNING_KEY_ID"))
+}
+if (!project.hasProperty("signing.password")) {
+    project.setProperty("signing.password", System.getenv("SIGNING_PASSWORD"))
+}
+if (!project.hasProperty("signing.secretKeyRingFile")) {
+    project.setProperty("signing.secretKeyRingFile", System.getenv("SIGNING_SECRET_RING"))
+}
+
+signing {
+    sign publishing.publications.mavenPublication
 }
 
 dependencies {
