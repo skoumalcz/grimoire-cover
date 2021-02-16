@@ -25,14 +25,12 @@ jobs:
         with:
           submodules: 'recursive'
           fetch-depth: 0
-      - name: Set version env
-        run: echo "RELEASE_VERSION=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
+      - name: Set version
+        run: echo "VERSION_NAME=${GITHUB_REF#refs/*/}" >> gradle.properties
       - name: Append variables
         run: |
-          echo "\n" >> gradle.properties
-          echo "publicationVersionName=$RELEASE_VERSION" >> gradle.properties
-          echo "ossrh.username=$OOSRH_USERNAME" >> gradle.properties
-          echo "ossrh.password=$OOSRH_PASSWORD" >> gradle.properties
+          echo "mavenCentralRepositoryUsername=$OOSRH_USERNAME" >> gradle.properties
+          echo "mavenCentralRepositoryPassword=$OOSRH_PASSWORD" >> gradle.properties
           echo "signing.keyId=$SIGNING_KEY_ID" >> gradle.properties
           echo "signing.password=$SIGNING_PASSWORD" >> gradle.properties
           echo "signing.secretKeyRingFile=$SIGNING_SECRET_RING" >> gradle.properties
