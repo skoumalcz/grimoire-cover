@@ -1,6 +1,6 @@
 package com.skoumal.grimoire.cover.git
 
-object GitTagTaskConfigSemantic : GitTagTask.Config {
+object GitTagTaskConfigSemantic : GitTagConfig {
 
     override val pattern: String
         get() = "*/*.*.*"
@@ -11,7 +11,7 @@ object GitTagTaskConfigSemantic : GitTagTask.Config {
     override val postfix: String
         get() = "-"
 
-    override fun transformVersionCode(versionName: String): Long {
+    override fun transformVersionCode(versionName: String): Int {
         val parts = versionName.split('.').toMutableList()
         if (parts.size != 3 || parts[1].length > 2 || parts[2].length > 2) {
             throw RuntimeException("Invalid version tag \"${versionName}\", format \"x.y.z\" expected.")
@@ -22,7 +22,7 @@ object GitTagTaskConfigSemantic : GitTagTask.Config {
         if (parts[2].length == 1) {
             parts[2] = "0" + parts[2]
         }
-        return parts.joinToString(separator = "").toLong()
+        return parts.joinToString(separator = "").toInt()
     }
 
 }
